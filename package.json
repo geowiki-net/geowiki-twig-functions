@@ -1,0 +1,27 @@
+{
+  "name": "@geowiki-net/geowiki-twig-functions",
+  "version": "1.0.0",
+  "description": "Various twig functions",
+  "main": "src/twigFunctions.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geowiki-net/geowiki-twig-functions.git"
+  },
+  "author": "Stephan Bösch-Plepelits <skunk@xover.mud.at>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/geowiki-net/geowiki-twig-functions/issues"
+  },
+  "homepage": "https://github.com/geowiki-net/geowiki-twig-functions#readme",
+  "dependencies": {
+    "js-yaml": "^4.1.1",
+    "md5": "^2.3.0",
+    "natsort": "^2.0.3",
+    "openstreetmap-date-format": "^0.4.0",
+    "openstreetmap-date-parser": "^0.1.2",
+    "twig": "^1.17.1"
+  }
+}
