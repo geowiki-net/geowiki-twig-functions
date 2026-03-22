@@ -134,6 +134,17 @@ Twig.extendFilter('is_area', function (value) {
     .length
 })
 
+Twig.extendFilter('is_closed', function (value) {
+  const geometries = getGeometries(value)
+
+  return !!geometries
+    .map(g =>
+      ['Polygon', 'MultiPolygon', 'Point'].includes(g.type) ||
+      (g.type === 'LineString' && g.coordinates[0][0] === g.coordinates[g.coordinates.length - 1][0] && g.coordinates[0][1] === g.coordinates[g.coordinates.length - 1][1]))
+    .filter(v => v)
+    .length
+})
+
 function twigClear (value) {
   if (value === null || typeof value !== 'object') {
     return value
