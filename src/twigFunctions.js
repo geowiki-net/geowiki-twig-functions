@@ -145,6 +145,25 @@ Twig.extendFilter('is_closed', function (value) {
     .length
 })
 
+Twig.extendFilter('lengthToPx', function (value, param) {
+  const metersPerPixel = param.length && param[0] && 'metersPerPixel' in param[0] ? param[0].metersPerPixel : 1
+  const m = ('' + value).trim().match(/^([+-]?[0-9]+(?:\.[0-9]+)?)\s*(px|m|%)$/)
+
+  if (m) {
+    switch (m[2]) {
+      case '%':
+        return value
+      case 'm':
+        return parseFloat(m[1]) / metersPerPixel
+      case 'px':
+      default:
+        return parseFloat(m[1])
+    }
+  }
+
+  return parseFloat(value)
+})
+
 function twigClear (value) {
   if (value === null || typeof value !== 'object') {
     return value
