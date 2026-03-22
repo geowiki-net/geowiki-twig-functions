@@ -100,6 +100,19 @@ Twig.extendFilter('json_pp', function (value, param) {
 
   return JSON.stringify(value, null, 'indent' in options ? ' '.repeat(options.indent) : '  ')
 })
+Twig.extendFilter('json_decode', function (value) {
+  return JSON.parse(value)
+})
+Twig.extendFilter('json_encode', function (value) {
+  if (value === 'undefined') {
+    return 'null'
+  }
+
+  value = twigClear(value)
+
+  return JSON.stringify(value)
+})
+
 Twig.extendFilter('yaml', function (value, param) {
   const options = param[0] || {}
 
