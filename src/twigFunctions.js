@@ -108,26 +108,30 @@ Twig.extendFilter('yaml', function (value, param) {
   return yaml.dump(value, options)
 })
 
-Twig.extendFilter('is_area', function (value) {
-  if (!value) { return null }
-
+function getGeometries (value) {
   if (typeof value === 'string' || value.constructor.name === 'String') {
     value = JSON.parse(value)
   }
 
-  if (value && value.type === 'Feature') {
-    value = value.geometry
+  if (!value) {
+    return []
+  } else if (value.type === 'Feature') {
+    return [ value.geometry ]
+  } else if (value.type === 'FeatureCollection') {
+    return value.features
+      .map(f => f.geometry)
+  } else {
+    return [ value ]
   }
-  else if (value && value.type === 'FeatureCollection') {
-    return !!value.features
-      .map(f => f.geometry && ['Polygon', 'MultiPolygon', 'Point'].includes(value.type))
-      .filter(v => v)
-      .length
-  }
+}
 
-  if (value && value.type) {
-    return ['Polygon', 'MultiPolygon', 'Point'].includes(value.type)
-  }
+Twig.extendFilter('is_area', function (value) {
+  const geometries = getGeometries(value)
+
+  return !!geometries
+    .map(g => g.type && ['Polygon', 'MultiPolygon', 'Point'].includes(g.type))
+    .filter(v => v)
+    .length
 })
 
 function twigClear (value) {
