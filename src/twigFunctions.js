@@ -122,6 +122,10 @@ Twig.extendFilter('yaml', function (value, param) {
 })
 
 function getGeometries (value) {
+  if (!value) {
+    return []
+  }
+
   if (typeof value === 'string' || value.constructor.name === 'String') {
     value = JSON.parse(value)
   }
